@@ -361,7 +361,7 @@ extern PFNGLUNIFORM1IPROC qglUniform1i;
 extern PFNGLACTIVETEXTUREPROC qglActiveTexture;
 extern PFNGLGETINFOLOGARBPROC qglGetInfoLogARB;
 extern PFNGLCREATESHADERPROC qglCreateShader;
-extern PFNGLSHADERSOURCEPROC qglShaderSource;
+// extern PFNGLSHADERSOURCEPROC qglShaderSource;
 extern PFNGLCOMPILESHADERPROC qglCompileShader;
 extern PFNGLCREATEPROGRAMPROC qglCreateProgram;
 extern PFNGLATTACHSHADERPROC qglAttachShader;

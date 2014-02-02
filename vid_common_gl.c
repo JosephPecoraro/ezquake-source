@@ -49,7 +49,7 @@ PFNGLUNIFORM1IPROC qglUniform1i;
 PFNGLACTIVETEXTUREPROC qglActiveTexture;
 PFNGLGETINFOLOGARBPROC qglGetInfoLogARB;
 PFNGLCREATESHADERPROC qglCreateShader;
-PFNGLSHADERSOURCEPROC qglShaderSource;
+// PFNGLSHADERSOURCEPROC qglShaderSource;
 PFNGLCOMPILESHADERPROC qglCompileShader;
 PFNGLCREATEPROGRAMPROC qglCreateProgram;
 PFNGLATTACHSHADERPROC qglAttachShader;
@@ -178,7 +178,7 @@ static void print_infolog(GLuint program)
 static unsigned int setup_shader(const char *src, unsigned int type)
 {
 	GLuint shader = qglCreateShader(type);
-	qglShaderSource(shader, 1, &src, NULL);
+    // qglShaderSource(shader, 1, &src, NULL);
 	qglCompileShader(shader);
 	print_infolog(shader);
 	return shader;
@@ -378,7 +378,7 @@ void GL_Init (void)
 	qglActiveTexture      = SDL_GL_GetProcAddress("glActiveTexture");
 	qglGetInfoLogARB      = SDL_GL_GetProcAddress("glGetInfoLogARB");
 	qglCreateShader       = SDL_GL_GetProcAddress("glCreateShader");
-	qglShaderSource       = SDL_GL_GetProcAddress("glShaderSource");
+    // qglShaderSource       = SDL_GL_GetProcAddress("glShaderSource");
 	qglCompileShader      = SDL_GL_GetProcAddress("glCompileShader");
 	qglCreateProgram      = SDL_GL_GetProcAddress("glCreateProgram");
 	qglAttachShader       = SDL_GL_GetProcAddress("glAttachShader");
@@ -393,7 +393,7 @@ void GL_Init (void)
 
 	if (!qglUseProgram || !qglGetUniformLocation || !qglUniform1f ||
 	    !qglUniform1i || !qglMultiTexCoord2f || !qglActiveTexture ||
-	    !qglGetInfoLogARB || !qglCreateShader || !qglShaderSource ||
+	    !qglGetInfoLogARB || !qglCreateShader || /*!qglShaderSource ||*/
 	    !qglCompileShader || !qglCreateProgram || !qglAttachShader ||
 	    !qglDeleteShader || !qglLinkProgram)
 			Sys_Error("Failed to find necessary OpenGL support...");
