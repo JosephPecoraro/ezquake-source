@@ -252,15 +252,6 @@ void SYSINFO_Init(void)
 #elif defined(__APPLE__)
 void SYSINFO_Init(void)
 {
-	// TODO: disconnect --> f_system for MacOSX (man sysctl)
-	// VVD: Look at code for FreeBSD: 30 lines down. :-)
-	{
-		extern const char *gl_renderer;
-
-		if (gl_renderer  &&  gl_renderer[0])
-			SYSINFO_3D_description = Q_strdup(gl_renderer);
-	}
-
 	int mib[2];
 	mib[0] = CTL_HW;
 	mib[1] = HW_MEMSIZE;
@@ -268,6 +259,20 @@ void SYSINFO_Init(void)
 	size_t length = sizeof(memsize_value);
 	sysctl(mib, 2, &memsize_value, &length, NULL, 0);
 	SYSINFO_memory = memsize_value;
+
+	mib[0] = CTL_HW;
+	mib[1] = HW_CPU_FREQ;
+	int cpu_frequency_value;
+	length = sizeof(cpu_frequency_value);
+	sysctl(mib, 2, &cpu_frequency_value, &length, NULL, 0);
+	SYSINFO_MHz = cpu_frequency_value / 1000. / 1000. + .5;
+
+	{
+		extern const char *gl_renderer;
+
+		if (gl_renderer  &&  gl_renderer[0])
+			SYSINFO_3D_description = Q_strdup(gl_renderer);
+	}
 
 	snprintf(f_system_string, sizeof(f_system_string), "%dMB", (int)(SYSINFO_memory / 1024. / 1024. + .5));
 
