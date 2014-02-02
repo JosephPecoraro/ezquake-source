@@ -29,6 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/time.h>
 #include <machine/cpufunc.h>
 #endif
+#ifdef __APPLE__
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif
 #include <SDL.h>
 #include "quakedef.h"
 #include "EX_browser.h"
@@ -256,6 +260,14 @@ void SYSINFO_Init(void)
 		if (gl_renderer  &&  gl_renderer[0])
 			SYSINFO_3D_description = Q_strdup(gl_renderer);
 	}
+
+	int mib[2];
+	mib[0] = CTL_HW;
+	mib[1] = HW_MEMSIZE;
+	int64_t memsize_value;
+	size_t length = sizeof(memsize_value);
+	sysctl(mib, 2, &memsize_value, &length, NULL, 0);
+	SYSINFO_memory = memsize_value;
 
 	snprintf(f_system_string, sizeof(f_system_string), "%dMB", (int)(SYSINFO_memory / 1024. / 1024. + .5));
 
